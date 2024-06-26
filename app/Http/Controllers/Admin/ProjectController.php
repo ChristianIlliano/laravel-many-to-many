@@ -92,6 +92,9 @@ class ProjectController extends Controller
         $project->description =$request->description;
         $project->slug = Str::slug($project->title);
         $project->save();
+
+        $project->technologies()->sync($request->technologies);
+
         return view('admin.projects.show', compact('project', "type"));
     }
 
