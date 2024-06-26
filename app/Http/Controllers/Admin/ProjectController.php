@@ -43,9 +43,14 @@ class ProjectController extends Controller
         $newProject->title = $data["title"];
         $newProject->type = $data["type"];
         $newProject->description = $data["description"];
-        $newProject->name =$data["name"];
+        // $newProject->name =$data["name"];
         $newProject->slug = Str::slug($newProject->title);
         $newProject->save();
+
+        if($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
+
         return redirect()->route("admin.projects.index");
     } 
 
@@ -73,7 +78,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view("admin.projects.edit", compact("project", "types"));
+        $technologies = Technology::all();
+        return view("admin.projects.edit", compact("project", "types", "technologies"));
     }
 
     /**
@@ -86,7 +92,7 @@ class ProjectController extends Controller
         $project->description =$request->description;
         $project->slug = Str::slug($project->title);
         $project->save();
-        return view('admin.projects.show', compact('project', "types"));
+        return view('admin.projects.show', compact('project', "type"));
     }
 
     /**

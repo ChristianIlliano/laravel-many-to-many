@@ -29,7 +29,7 @@
                     </td>
 
                     <td>
-                        <a  class="btn btn-primary" href="{{ route("admin.projects.show", ["project" => $item->slug ])}}">Dettagli</a>
+                        <a  class="btn btn-danger" href="{{ route("admin.projects.destroy", ["project" => $item->slug ])}}">Elimina</a>
                     </td>
                 </tr>
                 @endforeach
